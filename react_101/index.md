@@ -408,3 +408,472 @@ ReactDOM.render(<Toggle />, document.getElementById('app'));
 1. `Mounting`, when the component is being initialized and put into the DOM for the first time
 2. `Updating`, when the component updates as a result of changed state or changed props
 3. `Unmounting`, when the component is being removed from the DOM
+
+
+
+
+
+
+# React fundamentals from educative.io
+
+[react funcdamentals](https://www.educative.io/module/lesson/react-fundamentals/N82MNRzXMW8)
+
+
+* React can be integrated seamlessly with any other library or framework because `React is a view only library`.
+
+
+
+## MVC 
+
+- Model View Controler MVC architectural UI pattern
+
+* Model
+
+The central component of the pattern. It is the application's dynamic data structure, independent of the user interface.[5] It directly manages the data, logic and rules of the application.
+
+* View
+
+
+Any representation of information such as a chart, diagram or table. Multiple views of the same information are possible, such as a bar chart for management and a tabular view for accountants.
+
+
+* Controller
+
+
+Accepts input and converts it to commands for the model or view.
+
+
+## Ternary operator
+
+- app.js
+```javascript
+import React from 'react';
+
+export default class App extends React.Component {
+  render() {
+       const users = [
+      { name: 'Robin' },
+      { name: 'Markus' },
+    ];
+    const showUsers = true;
+    return (
+      <div>
+        {
+          showUsers ? (
+            <ul>
+              {users.map(user => <li>{user.name}</li>)}
+            </ul>
+          ) : (
+            null
+          )
+        }
+      </div>
+    );
+  }
+}
+```
+
+- index.js
+```javascript
+import React from 'react';
+require('./style.css');
+
+import ReactDOM from 'react-dom';
+import App from './app.js';
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
+
+```
+
+
+## Object destructuring and Spread operators
+
+* object desctructuring
+```javascript
+const student = {
+  ID: '21',
+  name: 'Jhon',
+  GPA: '3.0',
+};
+
+const {name:n} = student;
+console.log(n); // "Jhon"
+
+
+// no destructuring
+function Greeting(props) {
+  return <h1>{props.greeting}</h1>;
+}
+
+// destructuring
+function Greeting({ greeting }) {
+  return <h1>{greeting}</h1>;
+}
+```
+
+
+* spread operator
+
+[...a] -> creats new array
+
+```javascript
+a = [1,2,3];
+b = [4,5,6];
+c = [...a, ...b]; //spread operator
+console.log("c: " + c); // 1,2,3,4,5,6
+```
+
+## Arrow functions
+
+```javascript
+const students = [
+  { ID: 1, present: true},
+  { ID: 2, present: true},
+  { ID: 3, present: false}, 
+];
+
+const presentStudents = students.filter(function(student){return student.present;});
+console.log(presentStudents);
+
+
+// using arrow function
+const presentStudents = students.filter(student => student.present);
+
+```
+
+
+
+
+## Map, Reduce & Filter in React
+
+
+* map()
+
+- it creates a new array with the results of calling a user-written function on every element in the calling array
+
+
+- how to render a list of items in React
+```javascript
+import React from 'react';
+
+export default class App extends React.Component {
+  render() {
+    const users = [
+      {
+        name: 'Robin'
+      },
+      {
+        name: 'Markus'
+      },
+    ];
+
+    return (
+      <ul>
+        {users.map(user => (user => <li> {user.name} </li>))}
+      </ul>
+    );
+  }
+}
+```
+
+
+* filter()
+```javascript
+import React from 'react';
+
+export default class App extends React.Component {
+  render() {
+    var users = [
+      { name: 'Robin', isDeveloper: true },
+      { name: 'Markus', isDeveloper: false },
+      { name: 'John', isDeveloper: true },
+    ];
+
+    return (
+      <ul>
+        {users
+          .filter(user => user.isDeveloper)
+          .map(user => <li>{user.name}</li>)
+        }
+      </ul>
+    );
+  }
+}
+
+// in index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
+```
+
+
+## Modules
+
+* The classes defined in modules are private by default and can not be accessed by other files that exist inside your project. You can make them public by using import/export statements.
+
+
+### named imports and exports
+
+```javascript
+export {firstName, lastName};
+
+import {firstName} from 'path'
+```
+
+
+### default exports
+
+Adding a default keyword before any class definition makes it a default thing which we want to export from the given module. It can be used for a few use cases:
+
+1. to export and import a single functionality from a module
+
+2. to highlight the main functionality of the exported API of a module
+
+3. to have a fallback import functionality
+
+
+```javascript
+export default class_name {....};
+
+import class_name from module_name;
+
+```
+
+
+## Libraries in React
+
+React is only the view layer for your application. There is some internal state management offered by React, but apart from this, it is only a component library which renders HTML for your browser. 
+
+Everything else can be added from APIs (e.g. browser API, DOM API), JavaScript functionalities or external libraries. 
+
+
+
+## meet the first React component
+
+
+* functional component
+
+```javascript
+import React from 'react';
+
+const title = 'React';
+
+function App() {
+    return (
+      <div>
+          <h1> Hello {title} </h1>
+      </div>
+    );
+}
+
+export default App;
+```
+
+## JSX
+
+* Expect to come across more JSX-specific attributes like `className` and `onClick` instead of class and onclick, as you learn more about React.
+
+
+* how to render a list of items? using `map()`
+
+```javascript
+import React from 'react';
+
+const list = [
+  {
+    title: 'React',
+    url: 'https://reactjs.org/',
+    author: 'Jordan Walke',
+    num_comments: 3,
+    points: 4,
+    objectID: 0,
+  },
+  {
+    title: 'Redux',
+    url: 'https://redux.js.org/',
+    author: 'Dan Abramov, Andrew Clark',
+    num_comments: 2,
+    points: 5,
+    objectID: 1,
+  },
+];
+
+function App() {
+  return (
+    <div>
+      <h1>My Hacker Stories</h1>
+
+      <label htmlFor="search">Search: </label>
+      <input id="search" type="text" />
+
+      <hr />
+
+      {list.map(function(item) {
+        return (
+          <div key={item.objectID}>
+            <span>
+              <a href={item.url}>{item.title}</a>
+            </span>
+            <span>{item.author}</span>
+            <span>{item.num_comments}</span>
+            <span>{item.points}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+export default App;
+
+```
+
+## Forms in React
+
+
+
+## React Props
+
+* Using so-called props, we can pass variables as information from one component to another component.
+
+* `this.props`
+
+```javascript
+import React, { Component } from 'react';
+ 
+class App extends Component {
+  render() {
+    const greeting = 'Welcome to React';
+ 
+    return (
+      <div>
+        <Greeting greeting={greeting} />
+      </div>
+    );
+  }
+}
+ 
+class Greeting extends Component {
+  render() {
+    return <h1>{this.props.greeting}</h1>;
+  }
+}
+ 
+export default App;
+```
+
+
+* In a functional stateless component, the props are received in the function signature as arguments:
+
+```javascript
+import React, { Component } from 'react';
+ 
+class App extends Component {
+  render() {
+    const greeting = 'Welcome to React';
+ 
+    return (
+      <div>
+        <Greeting greeting={greeting} />
+      </div>
+    );
+  }
+}
+ 
+const Greeting = props => <h1>{props.greeting}</h1>;
+ 
+export default App;
+```
+
+* Props are read-only. That's the time when React State comes into play which can be changed
+
+
+## React State
+
+
+[react pass props to component](https://www.robinwieruch.de/react-pass-props-to-component)
+
+
+* React Props are used to pass information down the component tree; React state is used to make applications interactive. 
+
+
+* there is no way passing props from a child to a parent component. But you can always pass functions from parent to child components, whereas the child components make use of these functions and the functions may change the state in a parent component above
+
+```javascript
+import React, { Component } from 'react';
+ 
+class App extends Component {
+  constructor(props) {
+    super(props);
+ 
+    this.state = {
+      isShow: true,
+    };
+  }
+ 
+  toggleShow = () => {
+    this.setState(state => ({ isShow: !state.isShow }));
+  };
+ 
+  render() {
+    const greeting = 'Welcome to React';
+ 
+    return (
+      <div>
+        <Greeting greeting={greeting} isShow={this.state.isShow} />
+ 
+        <Button onClick={this.toggleShow} />
+      </div>
+    );
+  }
+}
+ 
+const Button = ({ onClick }) => (
+  <button onClick={onClick} type="button">
+    Toggle Show
+  </button>
+);
+ 
+const Greeting = ({ greeting, isShow }) =>
+  isShow ? <h1>{greeting}</h1> : null;
+ 
+export default App;
+```
+
+
+## React advanced state
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
