@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import SeasonDisplay from "./SeasonDisplay";
-
+import Spinner from "./Spinner";
 class App extends React.Component {
 	constructor(props) {
 		// specific to JS
@@ -36,10 +36,8 @@ class App extends React.Component {
 		console.log("will unmount");
 	}
 
-	// React says we have to define render!
-	// render function will be called many times
-	render() {
-		if (this.state.errorMessage && !this.state.lat) {
+  renderContent() {
+    if (this.state.errorMessage && !this.state.lat) {
 			return <div>Error: {this.state.errorMessage}</div>;
 		}
 
@@ -47,7 +45,18 @@ class App extends React.Component {
 			return <SeasonDisplay lat={this.state.lat} />;
 		}
 
-		return <div>Loading!</div>;
+		return (
+      <Spinner message='Please accept location request'/>
+    )
+  }
+	// React says we have to define render!
+	// render function will be called many times
+	render() {
+		return (
+      <div className="border red">
+        {this.renderContent()}
+      </div>
+    );
 	}
 }
 
