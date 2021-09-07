@@ -129,3 +129,32 @@ constructor -> render -> componentDidMount -> componentDidUpdate -> componentWil
 - same syntax
 
 <SeasonDisplat lat={this.state.lat}>
+
+## default props
+
+Component.defaultProps = {
+prop1: ,
+prop2: ,
+};
+
+- Avoiding conditionals in render, in case you need to change JSX for all conditions, there will be a lot of duplicates
+
+## example using state
+
+- display time every seconds
+
+```javascript
+class Clock extends React.Component {
+	state = { time: new Date().toLocaleTimeString() };
+
+	componentDidMount() {
+		setInterval(() => {
+			this.setState({ time: new Date().toLocaleTimeString() });
+		}, 1000);
+	}
+
+	render() {
+		return <div className="time">This time is : {this.state.time}</div>;
+	}
+}
+```
