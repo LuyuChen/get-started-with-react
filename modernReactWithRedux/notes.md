@@ -158,3 +158,140 @@ class Clock extends React.Component {
 	}
 }
 ```
+
+## handle user inputs wth Forms and events
+
+### controlled vs uncontrolled elements
+
+- why controlled elements?
+
+user types in input -> callback gets invoked -> we call setState with the new value -> component
+rerenders -> input is told what its value is (coming from the state)
+
+- diffs
+
+* uncontrolled elements:
+  we don't know the value of input right now, we need to access the input in the dom tree. The source of truth is inside html elements but not within our own react components. we want the react side controls everything
+
+* controlled elements:
+  we could look at the state object and always know the value of the input
+
+### Understand `this` in javascript
+
+- hard topic
+
+* How is the value of `this` determined in the function?
+
+```javascript
+class Car {
+	setDriverSound(sound) {
+		this.sound = sound;
+	}
+
+	drive() {
+		return this.sound;
+	} // this here is dynamic, it depends on "where" the function gets called
+}
+
+const car = new Car();
+car.setDriveSound("vroom");
+car.drive(); // here this refers to the the car object which called the drive function
+
+const truck = {
+	sound: "putputput",
+	driveMyTruck: car.drive,
+};
+
+truck.driveMyTruck(); // => the return value will be 'putputput'
+// because truck is where the drive() function get called
+
+// corner case
+
+const drive = car.drive;
+
+drive(); // get error: cannot read property 'sound' undefined
+```
+
+```javascript
+class SearchBar {
+	onFormSubmit(e) {
+		e.preventDefault();
+
+		console.log(this.state.term);
+	}
+
+
+  render() {
+    return <form onSubmit={this.onFormSubmit}>;
+  }
+
+}
+
+//console gives you error, access term on undefined object
+
+// here, when the 'onFormSubmit' function gets called, `this` !== the instance of class component
+```
+
+- how to solve it?
+
+1. binding function inside the constructor
+
+```javascript
+class SearchBar {
+	constructor() {
+		this.onFormSubmit = this.onFormSubmit.bind(this);
+	}
+}
+```
+
+2.  using arrow function instead
+
+```javascript
+class SearchBar {
+	onFormSubmit = (e) => {
+		e.preventDefault();
+
+		console.log(this.state.term);
+	};
+}
+
+// now 'this' refers to the instance of SearchBar object
+```
+
+3. wrap the function in arrow function
+
+And don't forget to pass the event in the wrapped arrow function
+
+```javascript
+class SearchBar extends React.Component {
+	state = { term: "" };
+
+	onFormSubmit(e) {
+		e.preventDefault();
+
+		console.log(this.state.term);
+	}
+
+	render() {
+		return (
+			<div className="ui segment">
+				<form
+					onSubmit={(event) => this.onFormSubmit(event)}
+					className="ui form"
+				>
+					<div className="field">
+						<label>Image Search</label>
+						<input
+							type="text"
+							value={this.state.term}
+							onChange={(e) => this.setState({ term: e.target.value })}
+						/>
+					</div>
+				</form>
+			</div>
+		);
+	}
+}
+```
+
+### pass callback as props
