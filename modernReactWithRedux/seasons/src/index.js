@@ -34,7 +34,6 @@ class App extends React.Component {
 
 	componentWillUnmount() {
 		console.log("will unmount");
-	}
 
   renderContent() {
     if (this.state.errorMessage && !this.state.lat) {
