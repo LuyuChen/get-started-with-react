@@ -1,5 +1,7 @@
 # Fundamentals of Redux Course from Dan Abramov
 
+https://egghead.io/courses/fundamentals-of-redux-course-from-dan-abramov-bd5cc867
+
 # Principles of Redux
 
 1. First principle: everything that changes in the appliocation, including data and UI states, is contained in a single object ,i.e., the state or the state tree
